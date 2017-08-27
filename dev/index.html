@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Neighborhood Project for Udacity Frontend Nanodegree">
+    <meta name="author" content="Márcio José Gurka Júnior">
+    <title>Neighborhood Map</title>
+
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/print.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script async="async" defer="defer" src="js/libs.js"></script>
+    <script async="async" defer="defer" src="js/script.js"></script>
+
+
+</head>
+
+<body>
+<header>
+    <p>Neighborhood Map Project</p>
+</header>
+
+<div class="container">
+    <div class="content">
+        <div class="sidebar">
+            <div class="input-container">
+                <label for="searchAutoComplete">Address search: </label>
+                <input data-bind="textInput: address" id="searchAutoComplete" placeholder="15th Street, New York"
+                       type="text">
+            </div>
+            <ul data-bind="if: placesList().length > 0">
+               <li data-bind="foreach:placesList">
+                   <span data-bind="text:name"></span> -
+                   <span data-bind="text:formatted_address"></span>
+               </li>
+            </ul>
+        </div>
+        <div id="map">
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Márcio José Gurka Júnior 2017</p>
+    </footer>
+</div>
+</body>
+</html>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAJgGOWTrRgC4i4Rk_3W3xORlZO_6-NnUw&v=3&callback=initMap"></script>
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
