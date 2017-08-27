@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
+	minify = require('gulp-minify'),
 	rename = require('gulp-rename'),
 	minifyCSS = require('gulp-minify-css'),
 	plumber = require('gulp-plumber'),
@@ -60,6 +61,7 @@ gulp.task('content', function() {
 	return gulp.src(paths.content)
     	.pipe(inline({
     	base: paths.content,
+    	js: minify,
     	css: minifyCSS,
     	disabledTypes: ['svg', 'img']
         }))
