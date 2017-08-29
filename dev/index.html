@@ -28,10 +28,10 @@
         <div class="sidebar">
             <div class="input-container">
                 <label for="searchAutoComplete">Address search: </label>
-                <input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                <input placeholder="Search…" type="search" id="searchAutoComplete" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
             </div>
             <ul data-bind="foreach:placesList" >
-               <li>
+               <li class="place-addr" data-bind="click: $parent.showPlace">
                    <span data-bind="text:formatted_address"></span>
                </li>
             </ul>
@@ -47,6 +47,5 @@
 </div>
 </body>
 </html>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAJgGOWTrRgC4i4Rk_3W3xORlZO_6-NnUw&v=3&callback=initMap"></script>
-<!--<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">-->
+<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAJgGOWTrRgC4i4Rk_3W3xORlZO_6-NnUw&v=3&callback=initMap&onerror=showError"></script>
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">

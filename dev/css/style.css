@@ -63,5 +63,23 @@ footer span { float: right; font-style: italic; }
 /* Smartphones (portrait) */
 @media only screen and (max-width: 480px) {
   body { font-size: 12px;}
-  header p { padding-left: 4.5em;}
+
+  .sidebar {
+    width: inherit;
+    min-height: inherit;
+    padding: 0;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  #map {
+    width: inherit;
+  }
+}
+
+.place-addr:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }

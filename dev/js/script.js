@@ -21,6 +21,11 @@ var initialPlaceMarkers = [
     }
 ];
 
+var foursquareCredentials = {
+    clientId: 'YOUR_CLIENT_ID',
+    clientSecret: 'YOUR_CLIENT_SECRET'
+};
+
 var googleMapsPlaceMarkers = [];
 var placeMarkers = [];
 
@@ -75,7 +80,7 @@ function createMarkersForPlaces(places) {
                     marker.setAnimation(google.maps.Animation.BOUNCE);
                     getPlacesDetails(this, placeInfoWindow);
                 }
-            }
+            };
         })(marker, i));
 
         placeMarkers.push(marker);
@@ -94,6 +99,38 @@ function createMarkersForPlaces(places) {
 // executed when a marker is selected, indicating the user wants more
 // details about that place.
 function getPlacesDetails(marker, infowindow) {
+    var date = new Date();
+    var mm = date.getMonth() + 1; // getMonth() is zero-based
+    var dd = date.getDate();
+    var version = [date.getFullYear(), (mm>9 ? '' : '0') + mm, (dd>9 ? '' : '0') + dd].join('');
+
+    var data = {
+        ll: marker.position.lat() + ',' + marker.position.lng(),
+        client_id: foursquareCredentials.clientId,
+        client_secret: foursquareCredentials.clientSecret,
+        v: version
+    };
+    $.ajax({
+        url: 'https://api.foursquare.com/v2/venues/search',
+        method: 'GET',
+        data: data,
+        success: successCallForsquare,
+        error: errorCallForsquare
+    });
+
+    var placeName;
+
+    function successCallForsquare(data) {
+        var venues = data.response.venues;
+        if(venues.length){
+            placeName = venues[0].name;
+        }
+    }
+
+    function errorCallForsquare(data) {
+        window.alert('Não foi possível obter algumas informações sobre o local')
+    }
+
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
         placeId: marker.id
@@ -102,7 +139,9 @@ function getPlacesDetails(marker, infowindow) {
             // Set the marker property on this infowindow so it isn't created again.
             infowindow.marker = marker;
             var innerHTML = '<div>';
-            if (place.name) {
+            if (placeName) {
+                innerHTML += '<strong>' + placeName + '</strong>';
+            } else if (place.name) {
                 innerHTML += '<strong>' + place.name + '</strong>';
             }
             if (place.formatted_address) {
@@ -170,7 +209,12 @@ function initMap() {
 
 var App = {
     address: ko.observable(''),
-    query: ko.observable('')
+    query: ko.observable(''),
+    showPlace: function (place) {
+        var places = [place];
+        hideMarkers(placeMarkers);
+        createMarkersForPlaces(places);
+    }
 };
 
 App.placesList = ko.dependentObservable(function () {
@@ -192,5 +236,6 @@ App.placesList = ko.dependentObservable(function () {
 }, App);
 
 
-
-
+function showError(){
+    window.alert("Erro carregando a biblioteca do Google Maps!");
+}
