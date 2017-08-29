@@ -10,4 +10,7 @@ This is a neighborhood map example, to accomplish the Udacity FrontEnd Nanodegre
   
 ## Observations
   * To change, you need to update the files at the `dev` folder, the files located at 
-  `dist` are built automatically with `gulp`.
+  `dist` are built automatically with `gulp`;
+  
+  * This application is using the [Foursquare API](https://developer.foursquare.com/), to work correctly,
+  you'll need to put replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` at `dev/script.js`. 
