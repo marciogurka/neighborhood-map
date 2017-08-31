@@ -52,6 +52,13 @@ function hideMarkers(markers) {
     }
 }
 
+function triggerClickMarker(place){
+    placeMarkers.forEach(function (marker) {
+        if(place.geometry.location.lat() == marker.position.lat() && place.geometry.location.lng() == marker.position.lng())
+            google.maps.event.trigger(marker, 'click');
+    })
+}
+
 
 // This function creates markers for each place found in either places search.
 function createMarkersForPlaces(places) {
@@ -214,6 +221,7 @@ var App = {
         var places = [place];
         hideMarkers(placeMarkers);
         createMarkersForPlaces(places);
+        triggerClickMarker(place);
     }
 };
 
